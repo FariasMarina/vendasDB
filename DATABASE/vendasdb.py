@@ -114,19 +114,20 @@ class Produtos:
             cursor.execute(f'DELETE FROM produtos WHERE id_produto="{id}"')
         print(f'O produto {self.nome} foi excluído.')
 
+data = arrow.now().format('HH:mm')
+hora = arrow.now().format('DD/MM')
+
 
 class Venda:
-    def __init__(self, data, hora, cpfa, cod_barras, qtde, valor_un, valor_tt):
-        self.data = data
-        self.hora = hora
+    def __init__(self, cpfa, cod_barras, qtde, valor_un, valor_tt):
         self.cpfa = cpfa
         self.cod_barras = cod_barras
         self.qtde = qtde
         self.valor_un = valor_un
         self.valor_tt = valor_tt
 
-    def novaVenda(self):
-        venda = input('Digite o produto qe qur vender pelo id: ')
+
+    def novaVenda(self, cod_barras):
         cursor.execute(f'INSERT INTO produtos(data_venda, hora_venda, cpf_cliente, cod_barras, quantidade, '
                        f'valor_unitario, valor_total)'
                        f'VALUES (?, ?, ?, ?, ?, ?, ?)', (self.data, self.hora, self.cod_barras, self.qtde,
@@ -149,7 +150,7 @@ marina = Cliente('Marina', '46007798003', '89030353', 'Rio', 'Rio', 'Rio')
 # marina.validarCep() #OK----------------------
 # marina.endereco()   OK----------------------
 # marina.cadastrarCliente() OK ---------------
-# marina.alterarCliente('46007798003')@@@@@@@@
+# marina.alterarCliente('46007798003')
 # marina.excluirCliente('1682526576') OK -----
 
 
@@ -158,7 +159,7 @@ p1 = Produtos('Suco de uva', '127721', 'Ambev')
 # p1.excluirProduto(4) # OK ------------------
 # p1.editarProduto() # @@@@@@@@@@@@@@@@@@@@@@@
 
-v1 = Venda()
+v1 = Venda('168252657')
 conexao.commit()
 cursor.close()
 conexao.close()
